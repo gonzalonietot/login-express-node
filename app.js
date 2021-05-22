@@ -14,9 +14,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.enable('jsonp callback')
 
 const loginRouter = require('./routes/login');
-app.use('/', loginRouter);
+const userRouter = require('./routes/user');
 
-app.listen(() => {
+app.use('/api/login', loginRouter);
+app.use('/api/user', userRouter);
+
+app.use((req, res) => {
+    res.status(404).send('Not found!!');
+});
+
+app.listen(port,() => {
     console.log(`Server ready on ${port}`)
 })
 module.exports = app;
